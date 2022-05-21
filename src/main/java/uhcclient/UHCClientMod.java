@@ -60,6 +60,7 @@ public class UHCClientMod implements ModInitializer {
                         Integer.parseUnsignedInt(data.substring(0, midIndex), 16),
                         data.substring(midIndex + 1)
                     );
+                    return ActionResult.PASS;
                 }
                 default:
                     System.err.println("Unknown packet type: " + packetType);

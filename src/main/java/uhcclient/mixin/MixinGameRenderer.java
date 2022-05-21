@@ -29,7 +29,7 @@ import uhcclient.UHCClientMod;
 @Mixin(GameRenderer.class)
 public class MixinGameRenderer {
     @Inject(
-        method = "method_1841(FL)V",
+        method = "method_1841(FJ)V",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/render/GameRenderer;renderWeather(F)V",
