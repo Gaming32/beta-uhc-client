@@ -10,7 +10,9 @@
     "MixinClientPlayNetworkHandler",
     "MixinEntity",
     "MixinGameRenderer",
-    "MixinRemoteClientPlayer"
+    "MixinItemInstance",
+    "MixinRemoteClientPlayer",
+    "MixinTranslationStorage"
   ],
   "injectors": {
     "defaultRequire": 1

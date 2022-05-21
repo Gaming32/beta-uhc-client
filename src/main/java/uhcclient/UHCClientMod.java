@@ -1,6 +1,8 @@
 package uhcclient;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
@@ -10,6 +12,7 @@ import uhcclient.packets.CustomPacketManager;
 
 public class UHCClientMod implements ModInitializer {
     public static Set<String> spectatingPlayers = new HashSet<>();
+    public static Map<Integer, String> mapIdToPlayerName = new HashMap<>();
     private static double worldBorder;
     private static double worldBorderDest;
     private static double worldBorderTicksRemaining;
@@ -50,6 +53,13 @@ public class UHCClientMod implements ModInitializer {
                     worldBorderInterp = (worldBorder - worldBorderDest) / (double)worldBorderTicksRemaining;
                     worldBorderInterpStart = System.currentTimeMillis();
                     return ActionResult.PASS;
+                }
+                case "mapplayer": {
+                    int midIndex = data.indexOf(' ');
+                    mapIdToPlayerName.put(
+                        Integer.parseUnsignedInt(data.substring(0, midIndex), 16),
+                        data.substring(midIndex + 1)
+                    );
                 }
                 default:
                     System.err.println("Unknown packet type: " + packetType);
