@@ -10,7 +10,7 @@
   ],
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/uhc-client/icon.png",
 
   "environment": "client",
   "entrypoints": {
