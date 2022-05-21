@@ -10,7 +10,11 @@ import uhcclient.packets.CustomPacketManager;
 
 public class UHCClientMod implements ModInitializer {
     public static Set<String> spectatingPlayers = new HashSet<>();
-    public static double worldBorder;
+    private static double worldBorder;
+    private static double worldBorderDest;
+    private static double worldBorderTicksRemaining;
+    private static double worldBorderInterp;
+    private static long worldBorderInterpStart;
 
     public CustomPacketManager packetManager;
 
@@ -35,7 +39,16 @@ public class UHCClientMod implements ModInitializer {
                     return ActionResult.PASS;
                 }
                 case "worldborder": {
-                    worldBorder = CustomPacketManager.stringToDouble(data);
+                    worldBorderDest = worldBorder = CustomPacketManager.stringToDouble(data);
+                    worldBorderInterp = worldBorderInterpStart = 0;
+                    return ActionResult.PASS;
+                }
+                case "worldborderinterp": {
+                    int midIndex = data.indexOf(' ');
+                    worldBorderDest = CustomPacketManager.stringToDouble(data.substring(0, midIndex));
+                    worldBorderTicksRemaining = Integer.parseUnsignedInt(data.substring(midIndex + 1), 16);
+                    worldBorderInterp = (worldBorder - worldBorderDest) / (double)worldBorderTicksRemaining;
+                    worldBorderInterpStart = System.currentTimeMillis();
                     return ActionResult.PASS;
                 }
                 default:
@@ -45,5 +58,17 @@ public class UHCClientMod implements ModInitializer {
         });
 
         System.out.println("Loaded uhc-client");
+    }
+
+    public static int worldBorderInterpDir() {
+        return worldBorderInterpStart == 0 ? 0 : Double.compare(worldBorderDest, worldBorder);
+    }
+
+    public static double getWorldBorder() {
+        return worldBorderInterpStart == 0
+            ? worldBorder
+            : worldBorderDest
+                + (worldBorderInterp * worldBorderTicksRemaining)
+                - (worldBorderInterp * (System.currentTimeMillis() - worldBorderInterpStart) / 50);
     }
 }

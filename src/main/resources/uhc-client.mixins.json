@@ -8,6 +8,7 @@
     "MinecraftAccessor",
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
+    "MixinEntity",
     "MixinEntityRenderDispatcher",
     "MixinGameRenderer"
   ],

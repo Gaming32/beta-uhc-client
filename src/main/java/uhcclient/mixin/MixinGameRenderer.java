@@ -35,13 +35,20 @@ public class MixinGameRenderer {
     )
     private void renderWorldBorder(CallbackInfo ci) {
         Player player = MinecraftAccessor.getInstance().player;
-        double worldBorder = UHCClientMod.worldBorder;
+        double worldBorder = UHCClientMod.getWorldBorder();
         glPushMatrix();
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_CULL_FACE); // We want both sides to render
         glEnable(GL_BLEND);
         glTranslated(-player.x, -player.y, -player.z);
-        glColor4f(0.1254902f, 0.1254902f, 1.0f, 0.5f);
+        int stage = UHCClientMod.worldBorderInterpDir();
+        if (stage == 1) {
+            glColor4f(0.2509804f, 1.0f, 0.5019608f, 0.5f);
+        } else if (stage == -1) {
+            glColor4f(1.0f, 0.1882353f, 0.1882353f, 0.5f);
+        } else {
+            glColor4f(0.1254902f, 0.1254902f, 1.0f, 0.5f);
+        }
         glBegin(GL_QUADS);
         {
             glVertex3d(worldBorder, 0,   -worldBorder);
