@@ -8,7 +8,8 @@
     "MinecraftAccessor",
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
-    "MixinEntityRenderDispatcher"
+    "MixinEntityRenderDispatcher",
+    "MixinGameRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
