@@ -17,7 +17,7 @@ public class MixinEntity {
     )
     private double moveDx(double dx) {
         final Entity entity = (Entity)(Object)this;
-        if (entity == MinecraftAccessor.getInstance().player) {
+        if (entity == UHCClientMod.MINECRAFT.player) {
             if (UHCClientMod.worldBorderInterpDir() == -1) return dx;
             if (UHCClientMod.spectatingPlayers.contains(((Player)entity).name)) return dx;
             final double worldBorder = UHCClientMod.getWorldBorder();
@@ -37,7 +37,7 @@ public class MixinEntity {
     )
     private double moveDz(double dz) {
         final Entity entity = (Entity)(Object)this;
-        if (entity == MinecraftAccessor.getInstance().player) {
+        if (entity == UHCClientMod.MINECRAFT.player) {
             if (UHCClientMod.worldBorderInterpDir() == -1) return dz;
             if (UHCClientMod.spectatingPlayers.contains(((Player)entity).name)) return dz;
             final double worldBorder = UHCClientMod.getWorldBorder();

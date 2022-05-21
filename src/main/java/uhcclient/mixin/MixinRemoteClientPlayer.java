@@ -17,7 +17,7 @@ public class MixinRemoteClientPlayer {
         cancellable = true
     )
     private void tick(CallbackInfo ci) {
-        if (UHCClientMod.spectatingPlayers.contains(MinecraftAccessor.getInstance().player.name)) {
+        if (UHCClientMod.spectatingPlayers.contains(UHCClientMod.MINECRAFT.player.name)) {
             return;
         }
         final Player player = (Player)(Object)this;

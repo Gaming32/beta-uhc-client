@@ -3,14 +3,14 @@ package uhcclient.packets;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.minecraft.entity.player.ClientPlayer;
 import uhcclient.ChatMessageCallback;
-import uhcclient.mixin.MinecraftAccessor;
+import uhcclient.UHCClientMod;
 
 public final class CustomPacketManager implements ChatMessageCallback {
     public CustomPacketManager() {
     }
 
     private static ClientPlayer getClientPlayer() {
-        return (ClientPlayer)MinecraftAccessor.getInstance().player;
+        return (ClientPlayer)UHCClientMod.MINECRAFT.player;
     }
 
     public void sendPacket(String packetType) {

@@ -5,12 +5,12 @@
   "mixins": [
   ],
   "client": [
-    "MinecraftAccessor",
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
     "MixinEntity",
     "MixinGameRenderer",
     "MixinItemInstance",
+    "MixinMinecraft",
     "MixinRemoteClientPlayer",
     "MixinTranslationStorage"
   ],

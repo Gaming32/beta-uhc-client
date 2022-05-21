@@ -7,10 +7,13 @@ import java.util.Set;
 
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.Minecraft;
 import uhcclient.packets.CustomPacketCallback;
 import uhcclient.packets.CustomPacketManager;
 
 public class UHCClientMod implements ModInitializer {
+    public static Minecraft MINECRAFT;
+
     public static Set<String> spectatingPlayers = new HashSet<>();
     public static Map<Integer, String> mapIdToPlayerName = new HashMap<>();
     private static double worldBorder;

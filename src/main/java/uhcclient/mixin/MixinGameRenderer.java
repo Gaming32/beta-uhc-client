@@ -37,14 +37,14 @@ public class MixinGameRenderer {
         )
     )
     private void renderWorldBorder(CallbackInfo ci) {
-        Player player = MinecraftAccessor.getInstance().player;
+        Player player = UHCClientMod.MINECRAFT.player;
         double worldBorder = UHCClientMod.getWorldBorder();
         glPushMatrix();
         glDisable(GL_CULL_FACE); // We want both sides to render
         glDisable(GL_LIGHTING);
         glEnable(GL_BLEND);
         glTranslated(-player.x, -player.y, -player.z);
-        glBindTexture(GL_TEXTURE_2D, MinecraftAccessor.getInstance().textureManager.getTextureId("/forcefield.png"));
+        glBindTexture(GL_TEXTURE_2D, UHCClientMod.MINECRAFT.textureManager.getTextureId("/forcefield.png"));
         int stage = UHCClientMod.worldBorderInterpDir();
         if (stage == 1) {
             glColor3f(0.2509804f, 1.0f, 0.5019608f);
