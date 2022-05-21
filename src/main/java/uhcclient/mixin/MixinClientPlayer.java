@@ -23,4 +23,16 @@ public class MixinClientPlayer {
             player.velocityY = 0.42; // Standard jump velocity
         }
     }
+
+    @Inject(
+        method = "dropSelectedItem()V",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    private void dropSelectedItem(CallbackInfo ci) {
+        final ClientPlayer player = (ClientPlayer)(Object)this;
+        if (UHCClientMod.spectatingPlayers.contains(player.name)) {
+            ci.cancel();
+        }
+    }
 }

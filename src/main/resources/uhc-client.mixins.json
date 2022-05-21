@@ -9,8 +9,8 @@
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
     "MixinEntity",
-    "MixinEntityRenderDispatcher",
-    "MixinGameRenderer"
+    "MixinGameRenderer",
+    "MixinRemoteClientPlayer"
   ],
   "injectors": {
     "defaultRequire": 1
