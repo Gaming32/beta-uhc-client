@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "uhcclient.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "MinecraftAccessor",
+    "MixinClientPlayer",
+    "MixinClientPlayNetworkHandler",
+    "MixinEntityRenderDispatcher"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

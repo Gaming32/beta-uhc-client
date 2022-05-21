@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "uhc-client",
+  "version": "${version}",
+
+  "name": "UHC Client",
+  "description": "",
+  "authors": [
+    "Gaming32"
+  ],
+
+  "license": "MIT",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "init": [
+      "uhcclient.UHCClientMod"
+    ]
+  },
+  "mixins": [
+    "uhc-client.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3",
+    "api": "*"
+  }
+}
