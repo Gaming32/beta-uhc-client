@@ -5,6 +5,7 @@
   "mixins": [
   ],
   "client": [
+    "class_266Accessor",
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
     "MixinEntity",
@@ -12,7 +13,9 @@
     "MixinItemInstance",
     "MixinMinecraft",
     "MixinRemoteClientPlayer",
-    "MixinTranslationStorage"
+    "MixinTranslationStorage",
+    "MixinWorldRenderer",
+    "SoundHelperAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

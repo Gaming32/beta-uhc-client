@@ -1,0 +1,40 @@
+package uhcclient.mixin;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import net.minecraft.class_266;
+import net.minecraft.class_267;
+import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.entity.player.Player;
+import uhcclient.UHCClientMod;
+
+@Mixin(WorldRenderer.class)
+public class MixinWorldRenderer {
+    @Inject(
+        method = "playLevelEvent(Lnet/minecraft/entity/player/Player;IIIII)V",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/level/Level;method_179(Ljava/lang/String;III)V"
+        ),
+        cancellable = true
+    )
+    private void playLevelEvent(Player player, int id, int x, int y, int z, int data, CallbackInfo ci) {
+        if (data == 0) {
+            System.out.println("some test");
+            ci.cancel();
+            class_266 audioRandomizer = ((SoundHelperAccessor)UHCClientMod.MINECRAFT.soundHelper).getField_2669();
+            List<class_267> sounds = ((class_266Accessor)audioRandomizer).getField_1089()
+                .computeIfAbsent("winsound", k -> new ArrayList<>());
+            if (sounds.size() == 0) {
+                sounds.add(new class_267("13 - Ending.wav", null));
+            }
+            UHCClientMod.MINECRAFT.soundHelper.method_2010("winsound", x, y, z, 1, 1);
+        }
+    }
+}
