@@ -21,7 +21,7 @@ public class MixinItemInstance {
         if (item.itemId == ItemType.map.id) {
             String playerName = UHCClientMod.mapIdToPlayerName.get(item.getDamage());
             if (playerName != null) {
-                cir.setReturnValue("player:" + playerName);
+                cir.setReturnValue("rawtext:" + playerName);
             }
         }
     }

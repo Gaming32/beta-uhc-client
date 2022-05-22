@@ -18,8 +18,8 @@ public class UHCClientMod implements ModInitializer {
     public static Map<Integer, String> mapIdToPlayerName = new HashMap<>();
     private static double worldBorder;
     private static double worldBorderDest;
-    private static double worldBorderTicksRemaining;
     private static double worldBorderInterp;
+    private static long worldBorderTicksRemaining;
     private static long worldBorderInterpStart;
 
     public CustomPacketManager packetManager;
@@ -52,7 +52,7 @@ public class UHCClientMod implements ModInitializer {
                 case "worldborderinterp": {
                     int midIndex = data.indexOf(' ');
                     worldBorderDest = CustomPacketManager.stringToDouble(data.substring(0, midIndex));
-                    worldBorderTicksRemaining = Integer.parseUnsignedInt(data.substring(midIndex + 1), 16);
+                    worldBorderTicksRemaining = Long.parseUnsignedLong(data.substring(midIndex + 1), 16);
                     worldBorderInterp = (worldBorder - worldBorderDest) / (double)worldBorderTicksRemaining;
                     worldBorderInterpStart = System.currentTimeMillis();
                     return ActionResult.PASS;
