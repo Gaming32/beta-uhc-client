@@ -2,7 +2,6 @@ package uhcclient.mixin;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
-import static org.lwjgl.opengl.GL11.GL_LIGHTING;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
@@ -41,20 +40,16 @@ public class MixinGameRenderer {
         double worldBorder = UHCClientMod.getWorldBorder();
         glPushMatrix();
         glDisable(GL_CULL_FACE); // We want both sides to render
-        glDisable(GL_LIGHTING);
         glEnable(GL_BLEND);
         glTranslated(-player.x, -player.y, -player.z);
         glBindTexture(GL_TEXTURE_2D, UHCClientMod.MINECRAFT.textureManager.getTextureId("/forcefield.png"));
         int stage = UHCClientMod.worldBorderInterpDir();
         if (stage == 1) {
             glColor3f(0.2509804f, 1.0f, 0.5019608f);
-            // glColor4f(0.2509804f, 1.0f, 0.5019608f, 0.5f);
         } else if (stage == -1) {
             glColor3f(1.0f, 0.1882353f, 0.1882353f);
-            // glColor4f(1.0f, 0.1882353f, 0.1882353f, 0.5f);
         } else {
             glColor3f(0.1254902f, 0.1254902f, 1.0f);
-            // glColor4f(0.1254902f, 0.1254902f, 1.0f, 0.5f);
         }
         double yDiff = (System.currentTimeMillis() % 1000) / 1000.0;
         glBegin(GL_QUADS);
@@ -100,7 +95,6 @@ public class MixinGameRenderer {
         }
         glEnd();
         glEnable(GL_CULL_FACE);
-        glEnable(GL_LIGHTING);
         glPopMatrix();
     }
 }
