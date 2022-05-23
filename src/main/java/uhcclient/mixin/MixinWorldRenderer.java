@@ -28,11 +28,11 @@ public class MixinWorldRenderer {
         if (data == 0) {
             ci.cancel();
             class_266 audioRandomizer = ((SoundHelperAccessor)UHCClientMod.MINECRAFT.soundHelper).getField_2669();
-            List<class_267> sounds = ((class_266Accessor)audioRandomizer).getField_1089()
-                .computeIfAbsent("winsound", k -> new ArrayList<>());
-            if (sounds.size() == 0) {
+            ((class_266Accessor)audioRandomizer).getField_1089().computeIfAbsent("winsound", k -> {
+                List<class_267> sounds = new ArrayList<>();
                 sounds.add(new class_267("13 - Ending.wav", null));
-            }
+                return sounds;
+            });
             UHCClientMod.MINECRAFT.soundHelper.method_2010("winsound", x, y, z, 1, 1);
         }
     }
