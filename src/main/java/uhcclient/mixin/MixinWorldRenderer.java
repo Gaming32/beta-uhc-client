@@ -26,7 +26,6 @@ public class MixinWorldRenderer {
     )
     private void playLevelEvent(Player player, int id, int x, int y, int z, int data, CallbackInfo ci) {
         if (data == 0) {
-            System.out.println("some test");
             ci.cancel();
             class_266 audioRandomizer = ((SoundHelperAccessor)UHCClientMod.MINECRAFT.soundHelper).getField_2669();
             List<class_267> sounds = ((class_266Accessor)audioRandomizer).getField_1089()
