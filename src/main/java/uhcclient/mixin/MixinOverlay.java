@@ -35,7 +35,7 @@ public class MixinOverlay {
             )
         );
         double shrinkEffect = Math.min(
-            UHCClientMod.getWorldBorderInterpSpeed() * 750_000.0,
+            UHCClientMod.getWorldBorderInterpSpeed() * 250_000.0,
             Math.abs(UHCClientMod.getWorldBorderInterpDest() - worldBorder)
         );
         double distanceEffect = Math.max(5, shrinkEffect);
