@@ -12,6 +12,7 @@
     "MixinGameRenderer",
     "MixinItemInstance",
     "MixinMinecraft",
+    "MixinOverlay",
     "MixinRemoteClientPlayer",
     "MixinTranslationStorage",
     "MixinWorldRenderer",
