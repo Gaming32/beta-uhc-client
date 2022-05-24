@@ -15,6 +15,7 @@ public class UHCClientMod implements ModInitializer {
     public static Minecraft MINECRAFT;
 
     public static Set<String> spectatingPlayers = new HashSet<>();
+    public static Map<String, Integer> glowingEffects = new HashMap<>();
     public static Map<Integer, String> mapIdToPlayerName = new HashMap<>();
     private static double worldBorder;
     private static double worldBorderDest;
@@ -60,9 +61,25 @@ public class UHCClientMod implements ModInitializer {
                 case "mapplayer": {
                     int midIndex = data.indexOf(' ');
                     mapIdToPlayerName.put(
-                        Integer.parseUnsignedInt(data.substring(0, midIndex), 16),
+                        Integer.valueOf(data.substring(0, midIndex), 16),
                         data.substring(midIndex + 1)
                     );
+                    return ActionResult.PASS;
+                }
+                case "glowing": {
+                    int midIndex = data.indexOf(' ');
+                    glowingEffects.put(
+                        data.substring(midIndex + 1),
+                        Integer.valueOf(data.substring(0, midIndex), 16)
+                    );
+                    return ActionResult.PASS;
+                }
+                case "noglowing": {
+                    if (data == null) {
+                        glowingEffects.clear();
+                    } else {
+                        glowingEffects.remove(data);
+                    }
                     return ActionResult.PASS;
                 }
                 default:

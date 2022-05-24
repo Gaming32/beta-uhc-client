@@ -9,6 +9,7 @@
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
     "MixinEntity",
+    "MixinEntityRenderDispatcher",
     "MixinGameRenderer",
     "MixinItemInstance",
     "MixinMinecraft",
