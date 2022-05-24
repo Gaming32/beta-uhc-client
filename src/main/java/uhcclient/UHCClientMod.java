@@ -85,4 +85,12 @@ public class UHCClientMod implements ModInitializer {
                 + (worldBorderInterp * worldBorderTicksRemaining)
                 - (worldBorderInterp * (System.currentTimeMillis() - worldBorderInterpStart) / 50);
     }
+
+    public static double getWorldBorderInterpDest() {
+        return worldBorderDest;
+    }
+
+    public static double getWorldBorderInterpSpeed() {
+        return worldBorderInterpStart == 0 ? 0.0 : worldBorderInterp;
+    }
 }
