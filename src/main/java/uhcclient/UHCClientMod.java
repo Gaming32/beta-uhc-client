@@ -14,9 +14,10 @@ import uhcclient.packets.CustomPacketManager;
 public class UHCClientMod implements ModInitializer {
     public static Minecraft MINECRAFT;
 
-    public static Set<String> spectatingPlayers = new HashSet<>();
-    public static Map<String, Integer> glowingEffects = new HashMap<>();
-    public static Map<Integer, String> mapIdToPlayerName = new HashMap<>();
+    public static final Set<String> spectatingPlayers = new HashSet<>();
+    public static final Map<String, Integer> glowingEffects = new HashMap<>();
+    public static final Map<Integer, String> mapIdToPlayerName = new HashMap<>();
+    public static final Map<String, String> displayNames = new HashMap<>();
     private static double worldBorder;
     private static double worldBorderDest;
     private static double worldBorderInterp;
@@ -80,6 +81,19 @@ public class UHCClientMod implements ModInitializer {
                     } else {
                         glowingEffects.remove(data);
                     }
+                    return ActionResult.PASS;
+                }
+                case "displayname": {
+                    int midIndex = data.indexOf(' ');
+                    if (midIndex == -1) {
+                        displayNames.remove(data);
+                    } else {
+                        displayNames.put(data.substring(0, midIndex), data.substring(midIndex + 1));
+                    }
+                    return ActionResult.PASS;
+                }
+                case "cleardisplaynames": {
+                    displayNames.clear();
                     return ActionResult.PASS;
                 }
                 default:
