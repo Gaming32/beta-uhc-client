@@ -17,6 +17,8 @@ public class MixinClientPlayNetworkHandler {
         cancellable = true
     )
     private void handleChatMessage(ChatMessagePacket packet, CallbackInfo ci) {
-        UHCClientMod.getPacketManager().handleMessage(packet.message);
+        if (UHCClientMod.getPacketManager().handleMessage(packet.message)) {
+            ci.cancel();
+        }
     }
 }

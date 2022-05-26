@@ -18,7 +18,7 @@ public final class CustomPacketManager {
         getClientPlayer().sendChatMessage("canyonuhc:" + packetType + ' ' + data);
     }
 
-    public void handleMessage(String message) {
+    public boolean handleMessage(String message) {
         if (message.startsWith("canyonuhc:")) {
             int endIndex = message.indexOf(' ', 10);
             String data;
@@ -30,7 +30,9 @@ public final class CustomPacketManager {
             }
             String packetType = message.substring(10, endIndex);
             UHCClientMod.handleCustomPacket(packetType, data);
+            return true;
         }
+        return false;
     }
 
     public static String doubleToString(double d) {
