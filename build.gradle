@@ -43,9 +43,6 @@ dependencies {
 		transitive false
 	}
 
-	// API. You technically don't need it, but it's extremely useful for not having to write the same code in every mod.
-	modImplementation "io.github.minecraft-cursed-legacy:cursed-legacy-api:${project.api_version}"
-
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 }

@@ -1,11 +1,8 @@
-package uhcclient.packets;
+package uhcclient;
 
-import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.minecraft.entity.player.ClientPlayer;
-import uhcclient.ChatMessageCallback;
-import uhcclient.UHCClientMod;
 
-public final class CustomPacketManager implements ChatMessageCallback {
+public final class CustomPacketManager {
     public CustomPacketManager() {
     }
 
@@ -21,8 +18,7 @@ public final class CustomPacketManager implements ChatMessageCallback {
         getClientPlayer().sendChatMessage("canyonuhc:" + packetType + ' ' + data);
     }
 
-    @Override
-    public ActionResult receive(String message) {
+    public void handleMessage(String message) {
         if (message.startsWith("canyonuhc:")) {
             int endIndex = message.indexOf(' ', 10);
             String data;
@@ -33,10 +29,8 @@ public final class CustomPacketManager implements ChatMessageCallback {
                 data = message.substring(endIndex + 1);
             }
             String packetType = message.substring(10, endIndex);
-            CustomPacketCallback.EVENT.invoker().handle(packetType, data);
-            return ActionResult.FAIL;
+            UHCClientMod.handleCustomPacket(packetType, data);
         }
-        return ActionResult.PASS;
     }
 
     public static String doubleToString(double d) {
