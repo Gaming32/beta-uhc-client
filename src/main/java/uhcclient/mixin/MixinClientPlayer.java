@@ -19,8 +19,12 @@ public class MixinClientPlayer {
         if (!UHCClientMod.spectatingPlayers.contains(player.name)) {
             return;
         }
-        if (player.keypressManager.jump) {
+        if (player.keypressManager.jump && !player.keypressManager.sneak) {
             player.velocityY = 0.42; // Standard jump velocity
+        } else if (player.keypressManager.sneak && !player.keypressManager.jump) {
+            player.velocityY = -0.42;
+        } else {
+            player.velocityY = 0;
         }
     }
 
