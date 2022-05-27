@@ -118,6 +118,10 @@ public class UHCClientMod implements ModInitializer {
                 displayNames.clear();
                 break;
             }
+            case "removeplayer": {
+                displayNames.remove(data);
+                break;
+            }
             default:
                 System.err.println("Unknown packet type: " + packetType);
                 break;

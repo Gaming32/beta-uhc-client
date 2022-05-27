@@ -1,9 +1,13 @@
 package uhcclient.mixin;
 
 import org.lwjgl.input.Keyboard;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.Player;
@@ -59,5 +63,31 @@ public class MixinEntity {
             }
         }
         return dz;
+    }
+
+    @Redirect(
+        method = "move(DDD)V",
+        at = @At(
+            value = "FIELD",
+            target = "Lnet/minecraft/entity/Entity;field_1642:Z",
+            opcode = Opcodes.GETFIELD
+        )
+    )
+    private boolean updateDespawnCounter(Entity entity) {
+        if (entity == UHCClientMod.MINECRAFT.player) {
+            return entity.field_1642 = UHCClientMod.spectatingPlayers.contains(((Player)entity).name);
+        }
+        return entity.field_1642;
+    }
+
+    @Inject(
+        method = "isInsideWall()Z",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    private void isInsideWall(CallbackInfoReturnable<Boolean> cir) {
+        if (((Entity)(Object)this).field_1642) {
+            cir.setReturnValue(false);
+        }
     }
 }

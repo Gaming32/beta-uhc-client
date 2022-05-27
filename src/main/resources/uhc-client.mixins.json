@@ -6,6 +6,7 @@
   ],
   "client": [
     "class_266Accessor",
+    "MixinAbstractClientPlayer",
     "MixinClientPlayer",
     "MixinClientPlayNetworkHandler",
     "MixinEntity",
