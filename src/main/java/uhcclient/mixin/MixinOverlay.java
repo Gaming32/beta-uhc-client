@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.Overlay;
-import net.minecraft.entity.LivingEntity;
 import uhcclient.UHCClientMod;
 
 @Mixin(Overlay.class)
