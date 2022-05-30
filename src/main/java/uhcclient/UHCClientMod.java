@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.LivingEntity;
 
 public class UHCClientMod implements ModInitializer {
     public static Minecraft MINECRAFT;
@@ -16,6 +17,7 @@ public class UHCClientMod implements ModInitializer {
     public static final Map<String, Integer> glowingEffects = new HashMap<>();
     public static final Map<Integer, String> mapIdToPlayerName = new HashMap<>();
     public static final Map<String, String> displayNames = new HashMap<>();
+    public static String customJukeboxMessage = null;
 
     private static double worldBorder;
     private static double worldBorderDest;
@@ -48,6 +50,21 @@ public class UHCClientMod implements ModInitializer {
 
     public static double getWorldBorderInterpSpeed() {
         return worldBorderInterpStart == 0 ? 0.0 : worldBorderInterp;
+    }
+
+    public static double getDistanceFromBorder() {
+        LivingEntity player = UHCClientMod.MINECRAFT.player;
+        double worldBorder = getWorldBorder();
+        return Math.min(
+            Math.min(
+                worldBorder - player.x,
+                player.x + worldBorder
+            ),
+            Math.min(
+                worldBorder - player.z,
+                player.z + worldBorder
+            )
+        );
     }
 
     public static CustomPacketManager getPacketManager() {

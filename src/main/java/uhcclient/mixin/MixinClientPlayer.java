@@ -16,6 +16,9 @@ public class MixinClientPlayer {
     )
     private void tick(CallbackInfo ci) {
         final ClientPlayer player = (ClientPlayer)(Object)this;
+        UHCClientMod.customJukeboxMessage =
+            "World border: " + (int)UHCClientMod.getWorldBorder() +
+            " | Distance from border: " + (int)UHCClientMod.getDistanceFromBorder();
         if (!UHCClientMod.spectatingPlayers.contains(player.name)) {
             return;
         }
