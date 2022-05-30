@@ -25,7 +25,7 @@ public class MixinWorldRenderer {
         cancellable = true
     )
     private void playLevelEvent(Player player, int id, int x, int y, int z, int data, CallbackInfo ci) {
-        if (data == 0) {
+        if (data == 1) {
             ci.cancel();
             class_266 audioRandomizer = ((SoundHelperAccessor)UHCClientMod.MINECRAFT.soundHelper).getField_2669();
             ((class_266Accessor)audioRandomizer).getField_1089().computeIfAbsent("winsound", k -> {
