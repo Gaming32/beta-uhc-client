@@ -16,7 +16,7 @@ public class MixinTranslationStorage {
     )
     private void method_995(String key, CallbackInfoReturnable<String> cir) {
         if (key.startsWith("rawtext:")) {
-            cir.setReturnValue(key.substring(7));
+            cir.setReturnValue(key.substring(8));
         }
     }
 }
