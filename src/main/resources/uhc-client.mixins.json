@@ -13,6 +13,7 @@
     "MixinEntityRenderDispatcher",
     "MixinGameRenderer",
     "MixinItemInstance",
+    "MixinLightning",
     "MixinMinecraft",
     "MixinOverlay",
     "MixinPlayerRenderer",

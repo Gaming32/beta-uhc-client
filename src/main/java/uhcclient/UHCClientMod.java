@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.Minecraft;
@@ -120,6 +121,12 @@ public class UHCClientMod implements ModInitializer {
             }
             case "removeplayer": {
                 displayNames.remove(data);
+                break;
+            }
+            case "lightning": {
+                ThreadLocalRandom tlr = ThreadLocalRandom.current();
+                MINECRAFT.level.playSound(MINECRAFT.player, "ambient.weather.thunder", 10000.0F, 0.8F + tlr.nextFloat() * 0.2F);
+                MINECRAFT.level.playSound(MINECRAFT.player, "random.explode", 2.0F, 0.5F + tlr.nextFloat() * 0.2F);
                 break;
             }
             default:
