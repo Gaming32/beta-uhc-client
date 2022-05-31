@@ -171,6 +171,30 @@ public class CommandManager {
                     command.source.sendFeedback(Formatting.WHITE + "/summon <entity> " + Formatting.GRAY + " - Summon an entity");
                 }
                 if (nonOp) return true;
+            case "pvp":
+                if (nonOperatorCheckLog(command.source)) return true;
+                UHCServerMod.getServer().allowPvp = !UHCServerMod.getServer().allowPvp;
+                command.source.sendFeedback("PVP is now " + (UHCServerMod.getServer().allowPvp ? "enabled" : "disabled"));
+                return true;
+            case "difficulty":
+                if (nonOperatorCheckLog(command.source)) return true;
+                if (args.length < 2) {
+                    command.source.sendFeedback("Invalid number of arguments; correct usage: /difficulty <difficulty>");
+                } else {
+                    try {
+                        int diff = Integer.parseInt(args[1]);
+                        if (diff < 0 || diff > 3) {
+                            command.source.sendFeedback("Invalid difficulty; correct usage: /difficulty <difficulty>");
+                            return true;
+                        }
+                        UHCServerMod.getServer().levels[0].difficulty = diff;
+                        UHCServerMod.getServer().levels[1].difficulty = diff;
+                        command.source.sendFeedback("Difficulty set to " + diff);
+                    } catch (NumberFormatException e) {
+                        command.source.sendFeedback("Invalid difficulty; correct usage: /difficulty <difficulty>");
+                    }
+                }
+                return true;
         }
         return false;
     }

@@ -23,7 +23,11 @@ public class UHCStateManager {
         synchronized (spectators) {
             spectators.clear();
         }
+
         UHCServerMod.sendCustomPacket("reset-spectators");
+
+        UHCServerMod.getServer().levels[0].difficulty = 0;
+        UHCServerMod.getServer().levels[1].difficulty = 0;
         //TODO: teleport players to spawn, reset world border, etc.
     }
 
@@ -41,6 +45,9 @@ public class UHCStateManager {
         UHCServerMod.getWorldBorder().setRadius(uhcStage.getEndSize());
         UHCServerMod.getWorldBorder().setRadius(uhcStage.getEndSize(), uhcStage.getTime());
         UHCServerMod.getServer().allowPvp = uhcStage.isPvp();
+
+        UHCServerMod.getServer().levels[0].difficulty = 3;
+        UHCServerMod.getServer().levels[1].difficulty = 3;
 
         for (Object player : UHCServerMod.getServer().playerManager.players) {
             ThreadLocalRandom rand = ThreadLocalRandom.current();
