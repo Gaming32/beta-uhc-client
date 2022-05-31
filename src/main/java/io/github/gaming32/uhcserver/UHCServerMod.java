@@ -1,10 +1,7 @@
 package io.github.gaming32.uhcserver;
 
 import io.github.gaming32.uhcserver.access.IEntity;
-import io.github.gaming32.uhcserver.managers.CommandManager;
-import io.github.gaming32.uhcserver.managers.TeamManager;
-import io.github.gaming32.uhcserver.managers.UHCStateManager;
-import io.github.gaming32.uhcserver.managers.WorldBorderManager;
+import io.github.gaming32.uhcserver.managers.*;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.Entity;
@@ -20,6 +17,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
     public static boolean TEST_MODE = Boolean.getBoolean("uhc.testMode");
     private static CommandManager commandManager;
     private static UHCStateManager stateManager;
+    private static SpectatorManager spectatorManager;
     private static TeamManager teamManager;
     private static WorldBorderManager worldBorder;
     private static MinecraftServer server;
@@ -45,6 +43,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
         UHCServerMod.server = server;
         commandManager = new CommandManager();
         stateManager = new UHCStateManager();
+        spectatorManager = new SpectatorManager();
         teamManager = new TeamManager();
         worldBorder = new WorldBorderManager();
 
@@ -57,6 +56,10 @@ public class UHCServerMod implements DedicatedServerModInitializer {
 
     public static UHCStateManager getStateManager() {
         return stateManager;
+    }
+
+    public static SpectatorManager getSpectatorManager() {
+        return spectatorManager;
     }
 
     public static TeamManager getTeamManager() {
@@ -135,7 +138,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
 
     public static void onPlayerJoin(ServerPlayer player) {
         worldBorder.onPlayerJoin(player);
-        stateManager.sendAllSpectators(player);
+        spectatorManager.sendAllSpectators(player);
         teamManager.sendAllTeams(player);
     }
 }
