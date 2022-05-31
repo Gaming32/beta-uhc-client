@@ -57,7 +57,7 @@ public abstract class MixinServerPlayPacketHandler {
     @Inject(method = "handleBasePlayer", at = @At("HEAD"))
     private void onHandleBasePlayer(BasePlayerPacket p, CallbackInfo ci) {
         if (UHCServerMod.getWorldBorder().moving()) return;
-        if (UHCServerMod.getStateManager().isSpectator(player.name)) return;
+        if (UHCServerMod.getSpectatorManager().isSpectator(player.name)) return;
         double wbr = UHCServerMod.getWorldBorder().getRadius();
         if (Math.abs(p.x) > wbr || Math.abs(p.z) > wbr) {
             if (Math.abs(player.x) < wbr && Math.abs(player.z) < wbr) {
@@ -75,26 +75,26 @@ public abstract class MixinServerPlayPacketHandler {
 
     @Inject(method = "handlePlayerDigging", at = @At("HEAD"), cancellable = true)
     private void onHandlePlayerBreak(PlayerDiggingC2S par1, CallbackInfo ci) {
-        if (UHCServerMod.getStateManager().isSpectator(player.name)) {
+        if (UHCServerMod.getSpectatorManager().isSpectator(player.name)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "handleItemUse", at = @At("HEAD"), cancellable = true)
     private void onHandleItemUse(ItemUseC2S par1, CallbackInfo ci) {
-        if (UHCServerMod.getStateManager().isSpectator(player.name)) {
+        if (UHCServerMod.getSpectatorManager().isSpectator(player.name)) {
             ci.cancel();
         }
     }
 
     @Redirect(method = "handleBasePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/server/MinecraftServer;allowFlight:Z", opcode = Opcodes.GETFIELD))
     private boolean onAllowFlight(MinecraftServer instance) {
-        return server.allowFlight || UHCServerMod.getStateManager().isSpectator(player.name);
+        return server.allowFlight || UHCServerMod.getSpectatorManager().isSpectator(player.name);
     }
 
     @Redirect(method = "handleEntityInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/player/ServerPlayer;attack(Lnet/minecraft/entity/Entity;)V"))
     private void onAttack(ServerPlayer instance, Entity entity) {
-        if (UHCServerMod.getStateManager().isSpectator(player.name)) {
+        if (UHCServerMod.getSpectatorManager().isSpectator(player.name)) {
             return;
         }
         if (entity instanceof ServerPlayer && Objects.equals(UHCServerMod.getTeamManager().getTeamForPlayer(((ServerPlayer) entity).name), UHCServerMod.getTeamManager().getTeamForPlayer(player.name))) {

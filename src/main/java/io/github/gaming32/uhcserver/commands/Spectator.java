@@ -16,7 +16,7 @@ public class Spectator extends AbstractCommand {
     @Override
     public void execute(String[] args, ServerPlayPacketHandler handler) {
         if (args.length == 1) {
-            UHCServerMod.getStateManager().setSpectator(handler.getName());
+            UHCServerMod.getSpectatorManager().setSpectator(handler.getName());
         }
         execute(args, (CommandSource) handler);
     }
@@ -26,7 +26,7 @@ public class Spectator extends AbstractCommand {
         if (args.length != 2) {
             source.sendFeedback(Formatting.RED + "Invalid args; usage: " + Formatting.GRAY + " /spectator " + getUsage(true, !(source instanceof ServerPlayPacketHandler)));
         }
-        UHCServerMod.getStateManager().setSpectator(args[1]);
+        UHCServerMod.getSpectatorManager().setSpectator(args[1]);
     }
 
     @Override

@@ -22,7 +22,14 @@ public class UHCStateManager {
 
         UHCServerMod.getServer().levels[0].difficulty = 0;
         UHCServerMod.getServer().levels[1].difficulty = 0;
-        //TODO: teleport players to spawn, reset world border, etc.
+
+        // teleport everyone to spawn
+        for (Object player : UHCServerMod.getServer().playerManager.players) {
+            UHCServerMod.teleportPlayer(((ServerPlayer) player).name, 0, UHCServerMod.getServer().levels[0].chunkCache.loadChunk(0, 0).getHeight(0, 0), 0);
+        }
+
+        // reset world border
+        UHCServerMod.getWorldBorder().setRadius(30);
     }
 
     public void startUHC() {
