@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 
 
 public class UHCServerMod implements DedicatedServerModInitializer {
-    public static final boolean TEST_MODE = Boolean.getBoolean("uhc.testMode");
     public static final Logger LOGGER = Logger.getLogger("UHC");
+    public static boolean TEST_MODE = Boolean.getBoolean("uhc.testMode");
     private static CommandManager commandManager;
     private static UHCStateManager stateManager;
     private static WorldBorderManager worldBorder;

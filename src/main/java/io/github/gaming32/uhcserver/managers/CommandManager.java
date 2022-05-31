@@ -150,6 +150,11 @@ public class CommandManager {
                     return true;
                 }
                 return true;
+            case "test-mode":
+                if (nonOperatorCheckLog(command.source)) return true;
+                UHCServerMod.TEST_MODE = !UHCServerMod.TEST_MODE;
+                command.source.sendFeedback("Test mode is now " + (UHCServerMod.TEST_MODE ? "enabled" : "disabled"));
+                return true;
             case "help":
                 boolean nonOp = nonOperatoreCheck(command.source);
                 if (nonOp) {
@@ -165,7 +170,6 @@ public class CommandManager {
                     command.source.sendFeedback(Formatting.WHITE + "/summon <entity> " + Formatting.GRAY + " - Summon an entity");
                 }
                 if (nonOp) return true;
-
         }
         return false;
     }
