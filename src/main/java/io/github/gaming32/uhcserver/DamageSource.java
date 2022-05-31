@@ -10,5 +10,6 @@ public enum DamageSource {
     DROWN,
     CACTUS,
     WORLD_BORDER,
+    SUICIDE,
     ;
 }

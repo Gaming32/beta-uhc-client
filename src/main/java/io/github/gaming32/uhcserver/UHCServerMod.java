@@ -44,6 +44,8 @@ public class UHCServerMod implements DedicatedServerModInitializer {
         commandManager = new CommandManager();
         stateManager = new UHCStateManager();
         worldBorder = new WorldBorderManager();
+
+        server.levels[0].getProperties().setSpawnPosition(0, 0, 0);
     }
 
     public static CommandManager getCommandManager() {
@@ -106,6 +108,8 @@ public class UHCServerMod implements DedicatedServerModInitializer {
                case WORLD_BORDER:
                    message += " died to the world border";
                    break;
+               case SUICIDE:
+                   message += " had enough";
            }
            if (System.currentTimeMillis() - ((IEntity) entity).getDamagedByTime() < 10000) {
                killer = ((IEntity) entity).getDamagedBy();

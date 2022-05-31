@@ -11,7 +11,7 @@ import io.github.gaming32.uhcserver.UHCServerMod;
 @Mixin(MinecraftServer.class)
 public class MixinMinecraftServer {
 
-    @Inject(method = "start", at = @At("HEAD"))
+    @Inject(method = "start", at = @At("RETURN"))
     public void onStart(CallbackInfoReturnable<Boolean> cir) {
         UHCServerMod.updateServer((MinecraftServer) (Object) this);
     }

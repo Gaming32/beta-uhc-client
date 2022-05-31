@@ -1,5 +1,8 @@
 package io.github.gaming32.uhcserver.mixin;
 
+import io.github.gaming32.uhcserver.DamageSource;
+import io.github.gaming32.uhcserver.access.IEntity;
+import io.github.gaming32.uhcserver.access.IServerPlayer;
 import net.minecraft.packet.play.BasePlayerPacket;
 import net.minecraft.server.network.ServerPlayPacketHandler;
 import net.minecraft.server.player.PlayerManager;
@@ -54,6 +57,11 @@ public abstract class MixinServerPlayPacketHandler {
 //                System.out.println("Moving player back to border");
             }
         }
+    }
+
+    @Inject(method = "method_836", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/player/ServerPlayer;damage(Lnet/minecraft/entity/Entity;I)Z"))
+    private void onKill(String par1, CallbackInfo ci) {
+        ((IEntity) player).setDamageCause(DamageSource.SUICIDE);
     }
 
 }
