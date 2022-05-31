@@ -2,6 +2,7 @@ package io.github.gaming32.uhcserver;
 
 import io.github.gaming32.uhcserver.access.IEntity;
 import io.github.gaming32.uhcserver.managers.CommandManager;
+import io.github.gaming32.uhcserver.managers.TeamManager;
 import io.github.gaming32.uhcserver.managers.UHCStateManager;
 import io.github.gaming32.uhcserver.managers.WorldBorderManager;
 import net.fabricmc.api.DedicatedServerModInitializer;
@@ -19,6 +20,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
     public static boolean TEST_MODE = Boolean.getBoolean("uhc.testMode");
     private static CommandManager commandManager;
     private static UHCStateManager stateManager;
+    private static TeamManager teamManager;
     private static WorldBorderManager worldBorder;
     private static MinecraftServer server;
 
@@ -43,6 +45,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
         UHCServerMod.server = server;
         commandManager = new CommandManager();
         stateManager = new UHCStateManager();
+        teamManager = new TeamManager();
         worldBorder = new WorldBorderManager();
 
         server.levels[0].getProperties().setSpawnPosition(0, 0, 0);
@@ -54,6 +57,10 @@ public class UHCServerMod implements DedicatedServerModInitializer {
 
     public static UHCStateManager getStateManager() {
         return stateManager;
+    }
+
+    public static TeamManager getTeamManager() {
+        return teamManager;
     }
 
     public static WorldBorderManager getWorldBorder() {
@@ -129,5 +136,6 @@ public class UHCServerMod implements DedicatedServerModInitializer {
     public static void onPlayerJoin(ServerPlayer player) {
         worldBorder.onPlayerJoin(player);
         stateManager.sendAllSpectators(player);
+        teamManager.sendAllTeams(player);
     }
 }

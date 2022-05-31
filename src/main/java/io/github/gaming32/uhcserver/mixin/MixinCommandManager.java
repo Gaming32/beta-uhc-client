@@ -1,5 +1,6 @@
 package io.github.gaming32.uhcserver.mixin;
 
+import io.github.gaming32.uhcserver.commands.AbstractCommand;
 import net.minecraft.server.command.Command;
 import net.minecraft.server.command.CommandManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +18,7 @@ public class MixinCommandManager {
             ci.cancel();
             return;
         }
-        if (UHCServerMod.getCommandManager().nonOperatorCheckLog(par1.source)) {
+        if (AbstractCommand.nonOperatorCheckLog(par1.source)) {
             ci.cancel();
         }
     }

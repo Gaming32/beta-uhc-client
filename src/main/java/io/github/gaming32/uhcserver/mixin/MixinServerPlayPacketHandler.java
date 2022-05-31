@@ -2,7 +2,7 @@ package io.github.gaming32.uhcserver.mixin;
 
 import io.github.gaming32.uhcserver.DamageSource;
 import io.github.gaming32.uhcserver.access.IEntity;
-import io.github.gaming32.uhcserver.access.IServerPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.packet.play.BasePlayerPacket;
 import net.minecraft.packet.play.ItemUseC2S;
 import net.minecraft.packet.play.PlayerDiggingC2S;
@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import io.github.gaming32.uhcserver.UHCServerMod;
+
+import java.util.Objects;
 
 @Mixin(ServerPlayPacketHandler.class)
 public abstract class MixinServerPlayPacketHandler {
@@ -88,6 +90,22 @@ public abstract class MixinServerPlayPacketHandler {
     @Redirect(method = "handleBasePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/server/MinecraftServer;allowFlight:Z", opcode = Opcodes.GETFIELD))
     private boolean onAllowFlight(MinecraftServer instance) {
         return server.allowFlight || UHCServerMod.getStateManager().isSpectator(player.name);
+    }
+
+    @Redirect(method = "handleEntityInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/player/ServerPlayer;attack(Lnet/minecraft/entity/Entity;)V"))
+    private void onAttack(ServerPlayer instance, Entity entity) {
+        if (UHCServerMod.getStateManager().isSpectator(player.name)) {
+            return;
+        }
+        if (entity instanceof ServerPlayer && Objects.equals(UHCServerMod.getTeamManager().getTeamForPlayer(((ServerPlayer) entity).name), UHCServerMod.getTeamManager().getTeamForPlayer(player.name))) {
+            return;
+        }
+        instance.attack(entity);
+    }
+
+    @Redirect(method = "handleChatMessage", at = @At(value = "FIELD", target = "Lnet/minecraft/server/player/ServerPlayer;name:Ljava/lang/String;"))
+    private String onChat(ServerPlayer instance) {
+        return UHCServerMod.getTeamManager().formatPlayer(instance.name);
     }
 
 }
