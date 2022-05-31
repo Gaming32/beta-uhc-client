@@ -49,6 +49,8 @@ public class UHCStateManager {
         UHCServerMod.getServer().levels[0].difficulty = 3;
         UHCServerMod.getServer().levels[1].difficulty = 3;
 
+        UHCServerMod.getServer().levels[0].setLevelTime(0);
+
         for (Object player : UHCServerMod.getServer().playerManager.players) {
             ThreadLocalRandom rand = ThreadLocalRandom.current();
             int x = rand.nextInt(-2000, 2001);
