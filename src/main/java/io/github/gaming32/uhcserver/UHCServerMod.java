@@ -1,15 +1,15 @@
 package io.github.gaming32.uhcserver;
 
+import io.github.gaming32.uhcserver.access.IEntity;
+import io.github.gaming32.uhcserver.managers.CommandManager;
+import io.github.gaming32.uhcserver.managers.UHCStateManager;
+import io.github.gaming32.uhcserver.managers.WorldBorderManager;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.packet.play.ChatMessagePacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.player.ServerPlayer;
-import io.github.gaming32.uhcserver.access.IEntity;
-import io.github.gaming32.uhcserver.managers.CommandManager;
-import io.github.gaming32.uhcserver.managers.UHCStateManager;
-import io.github.gaming32.uhcserver.managers.WorldBorderManager;
 
 import java.util.logging.Logger;
 
@@ -68,10 +68,6 @@ public class UHCServerMod implements DedicatedServerModInitializer {
 
     }
 
-    public static void setSpectator(String player) {
-
-    }
-
     public static void teleportPlayer(String player, double x, double y, double z) {
         server.playerManager.getPlayer(player).packetHandler.method_832(x, y, z, 0.0F, 0.0F);
 
@@ -121,6 +117,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
                 message += " using a " + I18n.translate(((ServerPlayer) killer).inventory.getHeldItem().getTranslationKey());
             }
         }
+        stateManager.dead(entity.name);
         server.playerManager.sendPacketToAll(new ChatMessagePacket(message + "."));
     }
 
@@ -131,5 +128,6 @@ public class UHCServerMod implements DedicatedServerModInitializer {
 
     public static void onPlayerJoin(ServerPlayer player) {
         worldBorder.onPlayerJoin(player);
+        stateManager.sendAllSpectators(player);
     }
 }

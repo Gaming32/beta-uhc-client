@@ -70,12 +70,13 @@ public class CommandManager {
                 if (nonOperatorCheckLog(command.source)) return true;
                 if (args.length < 2) {
                     if (command.source instanceof ServerPlayPacketHandler) {
-                        UHCServerMod.setSpectator(command.source.getName());
+                        UHCServerMod.getStateManager().setSpectator(command.source.getName());
+                        command.source.sendFeedback("You are now a spectator");
                     } else {
                         command.source.sendFeedback("Player argument required");
                     }
                 } else {
-                    UHCServerMod.setSpectator(args[1]);
+                    UHCServerMod.getStateManager().setSpectator(args[1]);
                 }
                 return true;
             case "tpcoords":

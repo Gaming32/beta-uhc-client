@@ -1,5 +1,6 @@
 package io.github.gaming32.uhcserver.managers;
 
+import net.minecraft.packet.play.ChatMessagePacket;
 import net.minecraft.server.player.ServerPlayer;
 import io.github.gaming32.uhcserver.UHCServerMod;
 
@@ -64,8 +65,8 @@ public class WorldBorderManager {
     }
 
     public void onPlayerJoin(ServerPlayer player) {
-        player.sendTranslatedMessage("canyonuhc:worldborder " + doubleToString(radius));
-        if (interpTicks > 0) player.sendTranslatedMessage("canyonuhc:worldborderinterp " + doubleToString(newRadius) + " " + Long.toHexString(interpTicks));
+        player.packetHandler.send(new ChatMessagePacket("canyonuhc:worldborder " + doubleToString(radius)));
+        if (interpTicks > 0) player.packetHandler.send(new ChatMessagePacket("canyonuhc:worldborderinterp " + doubleToString(newRadius) + " " + Long.toHexString(interpTicks)));
     }
 
 }

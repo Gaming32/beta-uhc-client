@@ -4,9 +4,13 @@ import io.github.gaming32.uhcserver.DamageSource;
 import io.github.gaming32.uhcserver.access.IEntity;
 import io.github.gaming32.uhcserver.access.IServerPlayer;
 import net.minecraft.packet.play.BasePlayerPacket;
+import net.minecraft.packet.play.ItemUseC2S;
+import net.minecraft.packet.play.PlayerDiggingC2S;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayPacketHandler;
 import net.minecraft.server.player.PlayerManager;
 import net.minecraft.server.player.ServerPlayer;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,6 +25,8 @@ public abstract class MixinServerPlayPacketHandler {
     @Shadow private ServerPlayer player;
 
     @Shadow public abstract void method_832(double d, double d1, double d2, float f, float f1);
+
+    @Shadow private MinecraftServer server;
 
     @Inject(method = "method_836", at = @At("HEAD"), cancellable = true)
     private void onMessage(String message, CallbackInfo ci) {
@@ -49,6 +55,7 @@ public abstract class MixinServerPlayPacketHandler {
     @Inject(method = "handleBasePlayer", at = @At("HEAD"))
     private void onHandleBasePlayer(BasePlayerPacket p, CallbackInfo ci) {
         if (UHCServerMod.getWorldBorder().moving()) return;
+        if (UHCServerMod.getStateManager().isSpectator(player.name)) return;
         double wbr = UHCServerMod.getWorldBorder().getRadius();
         if (Math.abs(p.x) > wbr || Math.abs(p.z) > wbr) {
             if (Math.abs(player.x) < wbr && Math.abs(player.z) < wbr) {
@@ -62,6 +69,25 @@ public abstract class MixinServerPlayPacketHandler {
     @Inject(method = "method_836", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/player/ServerPlayer;damage(Lnet/minecraft/entity/Entity;I)Z"))
     private void onKill(String par1, CallbackInfo ci) {
         ((IEntity) player).setDamageCause(DamageSource.SUICIDE);
+    }
+
+    @Inject(method = "handlePlayerDigging", at = @At("HEAD"), cancellable = true)
+    private void onHandlePlayerBreak(PlayerDiggingC2S par1, CallbackInfo ci) {
+        if (UHCServerMod.getStateManager().isSpectator(player.name)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "handleItemUse", at = @At("HEAD"), cancellable = true)
+    private void onHandleItemUse(ItemUseC2S par1, CallbackInfo ci) {
+        if (UHCServerMod.getStateManager().isSpectator(player.name)) {
+            ci.cancel();
+        }
+    }
+
+    @Redirect(method = "handleBasePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/server/MinecraftServer;allowFlight:Z", opcode = Opcodes.GETFIELD))
+    private boolean onAllowFlight(MinecraftServer instance) {
+        return server.allowFlight || UHCServerMod.getStateManager().isSpectator(player.name);
     }
 
 }
