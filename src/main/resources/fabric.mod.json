@@ -12,14 +12,18 @@
   "license": "MIT",
   "icon": "assets/uhc-client/icon.png",
 
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
-    "init": [
+    "client": [
       "uhcclient.UHCClientMod"
+    ],
+    "server" : [
+      "uhcserver.UHCServerMod"
     ]
   },
   "mixins": [
-    "uhc-client.mixins.json"
+    "uhc-client.mixins.json",
+    "uhc-server.mixins.json"
   ],
 
   "depends": {

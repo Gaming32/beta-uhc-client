@@ -6,11 +6,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 
-public class UHCClientMod implements ModInitializer {
+public class UHCClientMod implements ClientModInitializer {
     public static Minecraft MINECRAFT;
 
     public static final Set<String> spectatingPlayers = new HashSet<>();
@@ -27,7 +28,7 @@ public class UHCClientMod implements ModInitializer {
     private static CustomPacketManager packetManager;
 
     @Override
-    public void onInitialize() {
+    public void onInitializeClient() {
         packetManager = new CustomPacketManager();
         System.out.println("Loaded uhc-client");
     }

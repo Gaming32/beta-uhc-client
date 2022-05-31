@@ -1,0 +1,20 @@
+{
+    "required": true,
+    "package": "uhcserver.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "server": [
+        "MixinCactusTile",
+        "MixinCommandManager",
+        "MixinEntity",
+        "MixinLivingEntity",
+        "MixinMinecraftServer",
+        "MixinServerPlayer",
+        "MixinServerPlayPacketHandler",
+        "MixinServerLoginPacketHandler"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "mixins": [
+    ]
+}
