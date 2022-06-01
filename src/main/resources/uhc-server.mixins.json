@@ -10,7 +10,8 @@
         "MixinMinecraftServer",
         "MixinServerPlayer",
         "MixinServerPlayPacketHandler",
-        "MixinServerLoginPacketHandler"
+        "MixinServerLoginPacketHandler",
+        "MixinLevel"
     ],
     "injectors": {
         "defaultRequire": 1
