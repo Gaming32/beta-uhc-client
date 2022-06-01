@@ -14,9 +14,16 @@ public class Glow extends AbstractCommand {
     @Override
     public void execute(String[] args, ServerPlayPacketHandler handler) {
         if (args.length == 1) {
-            UHCServerMod.setGlow(handler.getName());
+            if (UHCServerMod.getGlowManager().isGlow(handler.getName())) {
+                UHCServerMod.getGlowManager().removeGlow(handler.getName());
+                handler.sendFeedback(Formatting.RED + "Glow disabled.");
+            } else {
+                UHCServerMod.getGlowManager().setGlow(handler.getName(), 0xFF0000);
+                handler.sendFeedback(Formatting.GREEN + "Glow enabled.");
+            }
+        } else {
+            execute(args, (CommandSource) handler);
         }
-        execute(args, (CommandSource) handler);
     }
 
     @Override
@@ -24,7 +31,13 @@ public class Glow extends AbstractCommand {
         if (args.length != 2) {
             source.sendFeedback(Formatting.RED + "Invalid args; usage: " + Formatting.GRAY + " /glow " + getUsage(true, !(source instanceof ServerPlayPacketHandler)));
         }
-        UHCServerMod.setGlow(args[1]);
+        if (UHCServerMod.getGlowManager().isGlow(args[1])) {
+            UHCServerMod.getGlowManager().removeGlow(args[1]);
+            source.sendFeedback(Formatting.RED + "Glow disabled for " + args[1] + ".");
+        } else {
+            UHCServerMod.getGlowManager().setGlow(args[1], 0xFF0000);
+            source.sendFeedback(Formatting.GREEN + "Glow enabled for " + args[1] + ".");
+        }
     }
 
     @Override

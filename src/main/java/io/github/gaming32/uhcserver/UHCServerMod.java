@@ -18,6 +18,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
     private static CommandManager commandManager;
     private static UHCStateManager stateManager;
     private static SpectatorManager spectatorManager;
+    private static GlowManager glowManager;
     private static TeamManager teamManager;
     private static WorldBorderManager worldBorder;
     private static MinecraftServer server;
@@ -44,6 +45,7 @@ public class UHCServerMod implements DedicatedServerModInitializer {
         commandManager = new CommandManager();
         stateManager = new UHCStateManager();
         spectatorManager = new SpectatorManager();
+        glowManager = new GlowManager();
         teamManager = new TeamManager();
         worldBorder = new WorldBorderManager();
 
@@ -66,16 +68,16 @@ public class UHCServerMod implements DedicatedServerModInitializer {
         return teamManager;
     }
 
+    public static GlowManager getGlowManager() {
+        return glowManager;
+    }
+
     public static WorldBorderManager getWorldBorder() {
         return worldBorder;
     }
 
     public static MinecraftServer getServer() {
         return server;
-    }
-
-    public static void setGlow(String player) {
-
     }
 
     public static void teleportPlayer(String player, double x, double y, double z) {
@@ -140,5 +142,6 @@ public class UHCServerMod implements DedicatedServerModInitializer {
         worldBorder.onPlayerJoin(player);
         spectatorManager.sendAllSpectators(player);
         teamManager.sendAllTeams(player);
+        glowManager.sendAllGlow(player);
     }
 }

@@ -2,11 +2,13 @@ package io.github.gaming32.uhcserver.mixin;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.player.ServerPlayer;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import io.github.gaming32.uhcserver.access.IEntity;
@@ -17,6 +19,7 @@ import io.github.gaming32.uhcserver.UHCServerMod;
 public class MixinEntity implements IEntity {
     @Shadow public double x;
     @Shadow public double z;
+    @Shadow public boolean field_1642;
     @Unique protected DamageSource damageCause;
 
     @Unique protected Entity damagedBy;
@@ -50,6 +53,32 @@ public class MixinEntity implements IEntity {
         if (i != null) {
             damagedBy = i;
             time = System.currentTimeMillis();
+        }
+    }
+
+    @Redirect(
+        method = "move(DDD)V",
+        at = @At(
+            value = "FIELD",
+            target = "Lnet/minecraft/entity/Entity;field_1642:Z",
+            opcode = Opcodes.GETFIELD
+        )
+    )
+    private boolean allowNoclip(Entity entity) {
+        if (entity instanceof ServerPlayer) {
+            field_1642 = UHCServerMod.getSpectatorManager().isSpectator(((ServerPlayer) entity).name);
+        }
+        return field_1642;
+    }
+
+    @Inject(
+        method = "isInsideWall()Z",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    private void isInsideWall(CallbackInfoReturnable<Boolean> cir) {
+        if (((Entity)(Object)this).field_1642) {
+            cir.setReturnValue(false);
         }
     }
 

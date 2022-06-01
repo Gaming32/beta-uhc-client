@@ -16,16 +16,19 @@ public class SpectatorManager {
         UHCServerMod.sendCustomPacket("reset-spectators");
     }
 
-    public void setSpectator(String name) {
+    public synchronized void setSpectator(String name) {
         spectators.add(name);
+        UHCServerMod.getServer().playerManager.getPlayer(name).field_1642 = true;
         UHCServerMod.sendCustomPacket("spectator", name);
     }
 
-    public void sendAllSpectators(ServerPlayer player) {
-        synchronized (spectators) {
-            for (String p : spectators) {
-                player.packetHandler.send(new ChatMessagePacket("canyonuhc:spectator " + p));
-            }
+    public synchronized void sendAllSpectators(ServerPlayer player) {
+        if (spectators.contains(player.name)) {
+            player.field_1642 = true;
+        }
+
+        for (String p : spectators) {
+            player.packetHandler.send(new ChatMessagePacket("canyonuhc:spectator " + p));
         }
     }
 
