@@ -6,20 +6,25 @@
   "name": "UHC Client",
   "description": "",
   "authors": [
-    "Gaming32"
+    "Gaming32",
+    "Wagyourtail"
   ],
 
   "license": "MIT",
   "icon": "assets/uhc-client/icon.png",
 
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
-    "init": [
-      "uhcclient.UHCClientMod"
+    "client": [
+      "io.github.gaming32.uhcclient.UHCClientMod"
+    ],
+    "server" : [
+      "io.github.gaming32.uhcserver.UHCServerMod"
     ]
   },
   "mixins": [
-    "uhc-client.mixins.json"
+    "uhc-client.mixins.json",
+    "uhc-server.mixins.json"
   ],
 
   "depends": {

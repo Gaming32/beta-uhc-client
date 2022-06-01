@@ -1,0 +1,21 @@
+{
+    "required": true,
+    "package": "io.github.gaming32.uhcserver.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "server": [
+        "MixinCactusTile",
+        "MixinCommandManager",
+        "MixinEntity",
+        "MixinLivingEntity",
+        "MixinMinecraftServer",
+        "MixinServerPlayer",
+        "MixinServerPlayPacketHandler",
+        "MixinServerLoginPacketHandler",
+        "MixinLevel"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "mixins": [
+    ]
+}
